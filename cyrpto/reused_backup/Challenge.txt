@@ -1,0 +1,115 @@
+-- =========================================================
+-- Challenge : Reused Backup
+-- Category  : Cryptography
+-- Difficulty: Medium
+-- =========================================================
+
+-- -------------------------
+-- Description:
+-- -------------------------
+-- A backup file was encrypted using a custom encryption
+-- algorithm developed internally.
+--
+-- The developer reused the same secret key multiple times,
+-- assuming it was secure.
+--
+-- We managed to intercept the encrypted backup data.
+-- Using cryptographic analysis, recover the original message.
+
+-- -------------------------
+-- Flag Format:
+-- -------------------------
+-- SECE{...}
+
+-- -------------------------
+-- Files Provided:
+-- -------------------------
+-- cipher.txt
+
+-- 30373a350f170c00261907300d1d0d2f11010000000000060c1c04
+
+-- -------------------------
+-- Hints:
+-- -------------------------
+-- 1. XOR encryption is reversible.
+-- 2. Reusing a key introduces patterns.
+-- 3. The flag format can help recover the key.
+
+-- =========================================================
+-- OFFICIAL WRITE-UP
+-- =========================================================
+
+-- -------------------------
+-- Step 1: Identify the Encryption
+-- -------------------------
+-- The ciphertext is encoded in hexadecimal, which suggests
+-- the actual encrypted data is binary.
+--
+-- The description mentions a reused secret key, indicating
+-- XOR encryption with a repeating key.
+
+-- -------------------------
+-- Step 2: Decode the Ciphertext
+-- -------------------------
+-- Convert the hex string into raw bytes.
+
+-- Python equivalent:
+-- cipher = bytes.fromhex(
+--   "30373a350f170c00261907300d1d0d2f11010000000000060c1c04"
+-- )
+
+-- -------------------------
+-- Step 3: Known-Plaintext Attack
+-- -------------------------
+-- The flag format is known:
+-- SECE{
+--
+-- XOR property:
+-- key = ciphertext XOR plaintext
+--
+-- Using the first 5 bytes to recover part of the key.
+
+-- Python equivalent:
+-- known = b"SECE{"
+-- key_part = bytes([cipher[i] ^ known[i] for i in range(len(known))])
+
+-- Output:
+-- crypt
+
+-- -------------------------
+-- Step 4: Recover the Full Key
+-- -------------------------
+-- From the recovered key portion and repetition pattern,
+-- the full key is determined to be:
+--
+-- crypto
+
+-- -------------------------
+-- Step 5: Decrypt the Ciphertext
+-- -------------------------
+-- Apply XOR decryption using the repeating key.
+
+-- Python equivalent:
+-- key = b"crypto"
+-- plaintext = bytes([
+--   cipher[i] ^ key[i % len(key)]
+--   for i in range(len(cipher))
+-- ])
+
+-- -------------------------
+-- Decrypted Output:
+-- -------------------------
+-- SECE{xor_is_not_encryption}
+
+-- -------------------------
+-- Final Flag:
+-- -------------------------
+-- SECE{xor_is_not_encryption}
+
+-- =========================================================
+-- Key Takeaways:
+-- =========================================================
+-- 1. XOR is not secure when keys are reused.
+-- 2. Known-plaintext attacks are effective.
+-- 3. Encoding does not equal encryption.
+-- =========================================================
