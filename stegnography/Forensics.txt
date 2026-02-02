@@ -1,0 +1,31 @@
+Challenge: Hidden in Plain Sight
+Category: Forensics
+Difficulty: Easy
+
+Description:
+The image contains multiple fragments of the flag stored using different data-hiding techniques.
+Analyze the file at different layers and reconstruct the complete flag.
+
+Flag:
+SECE{F1rstp@rt_S3c0nd_part_3rdp@rt}
+
+Hints:
+1. File metadata may contain non-visual information.
+2. Human-readable strings can exist inside binary data.
+3. Standard forensic or steganography tools may reveal hidden content.
+
+Write-Up:
+Step 1:
+Inspect the image metadata to identify any embedded textual information.
+The first fragment of the flag is stored within the metadata fields.
+
+Step 2:
+Analyze the raw file contents to locate readable strings.
+The second fragment of the flag appears as a plain string inside the binary data.
+
+Step 3:
+Perform steganographic analysis on the image.
+Extract the hidden payload to obtain the final fragment of the flag.
+
+Step 4:
+Combine all recovered fragments in the correct order to reconstruct the complete flag.
